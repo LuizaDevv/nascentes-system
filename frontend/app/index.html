@@ -1,0 +1,353 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2180A0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Contagem das Nascentes">
+    
+    <title>Contagem das Nascentes</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-top">Etapa <span id="etapaAtual">1</span> de 16</div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            <div class="step-info">MÓDULO <span id="moduloAtual">1</span> DE 6</div>
+        </header>
+
+        <!-- MAIN -->
+        <main class="main">
+            <!-- TELA INICIAL -->
+            <div class="module active" id="module-inicial">
+                <div style="text-align: center; padding: 40px 20px;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">💧</div>
+                    <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 16px;">Contagem das Nascentes</h1>
+                    <p style="font-size: 18px; color: var(--text-light); margin-bottom: 32px; line-height: 1.6;">
+                        Ajude a proteger as fontes de água da nossa região
+                    </p>
+                    <button class="btn btn-primary" onclick="proximoModulo()" style="width: 100%; margin-bottom: 12px;">
+                        <span>Cadastrar uma Nova Nascente</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="proximoModulo()" style="width: 100%;">
+                        <span>Monitorar Nascente Já Cadastrada</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 1: IDENTIFICAÇÃO -->
+            <div class="module" id="module-1">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 1 DE 6</div>
+                    <h2>Sua Identificação</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Seu nome e telefone para contato</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nome Completo</label>
+                    <input type="text" class="input-large" id="nome" placeholder="Digite seu nome completo">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Telefone com DDD</label>
+                    <input type="tel" class="input-large" id="telefone" placeholder="(31) 99999-9999">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 2: DATA E BACIA -->
+            <div class="module" id="module-2">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 1 DE 6</div>
+                    <h2>Quando é o Registro?</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Data de hoje</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Data do Registro</label>
+                    <input type="date" class="input-large" id="data">
+                </div>
+
+                <div class="module-title" style="margin-top: 32px;">
+                    <div class="module-subtitle">MÓDULO 2 DE 6</div>
+                    <h2>Bacia Hidrográfica</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">A qual bacia a nascente pertence?</p>
+                </div>
+
+                <div class="choices-grid" id="baciaChoices"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 3: LOCALIZAÇÃO -->
+            <div class="module" id="module-3">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 2 DE 6</div>
+                    <h2>Localização da Nascente</h2>
+                </div>
+
+                <button class="btn btn-warning" onclick="obterGPS()" style="width: 100%; background: #F97316; color: white; margin-bottom: 20px;">
+                    📍 USAR MINHA LOCALIZAÇÃO ATUAL
+                </button>
+
+                <div class="form-group">
+                    <label class="form-label">Coordenadas</label>
+                    <input type="text" class="input-large" id="coordenadas" placeholder="Será preenchido automaticamente" readonly>
+                    <div class="hint-text">Será preenchido automaticamente</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ponto de Referência</label>
+                    <input type="text" class="input-large" id="referencia" placeholder="Ex: perto da cachoeira, atrás do sítio do Zé">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 4: TIPO DE TERRENO -->
+            <div class="module" id="module-4">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 4 DE 6</div>
+                    <h2>Onde Ela Nasce?</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Em que tipo de terreno a água aparece?</p>
+                </div>
+
+                <div class="choices-grid" id="terrainyChoices"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 5: VOLUME DE ÁGUA -->
+            <div class="module" id="module-5">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 4 DE 6</div>
+                    <h2>Volume de Água</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Qual a quantidade de água que sai da nascente?</p>
+                </div>
+
+                <div class="choices-grid" id="volumeChoices"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 6: COMO ELA É -->
+            <div class="module" id="module-6">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 4 DE 6</div>
+                    <h2>Como Ela é?</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">A água brota de um ponto único ou espalhada?</p>
+                </div>
+
+                <div class="choices-grid" id="formatoChoices"></div>
+
+                <div style="margin-top: 22px;">
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Tem água o ano todo ou seca em alguns períodos?</p>
+                </div>
+
+                <div class="choices-grid" id="temporalidadeChoices" style="margin-top: 12px;"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 7: APARÊNCIA -->
+            <div class="module" id="module-7">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 4 DE 6</div>
+                    <h2>Aparência do Local</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Qual a condição observada? (pode escolher mais de uma)</p>
+                </div>
+
+                <div class="choices-grid" id="aparenciaChoices"></div>
+
+                <div style="margin-top: 22px;">
+                    <p style="font-size: 16px; color: var(--text-light);">O solo ao redor é:</p>
+                </div>
+
+                <div class="choices-grid" id="soloChoices" style="margin-top: 12px; grid-template-columns: 1fr 1fr;"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 8: USO E ACESSO -->
+            <div class="module" id="module-8">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 5 DE 6</div>
+                    <h2>Uso e Acesso</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Para que a água desta nascente é usada? (pode escolher mais de uma)</p>
+                </div>
+
+                <div class="choices-grid" id="usoChoices"></div>
+
+                <div style="margin-top: 22px;">
+                    <p style="font-size: 16px; color: var(--text-light);">O acesso à nascente é:</p>
+                </div>
+
+                <div class="choices-grid" id="acessoChoices" style="margin-top: 12px;"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 9: SINAIS DE IMPACTO -->
+            <div class="module" id="module-9">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 5 DE 6</div>
+                    <h2>Sinais de Impacto</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Vê esgoto sendo jogado na nascente ou perto dela?</p>
+                </div>
+
+                <div class="choices-grid" id="esgotoChoices"></div>
+
+                <div style="margin-top: 22px;">
+                    <p style="font-size: 16px; color: var(--text-light);">Há sinais de ferrugem na água ou nas pedras?</p>
+                </div>
+
+                <div class="choices-grid" id="ferrugemChoices" style="margin-top: 12px;"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 10: QUALIDADE -->
+            <div class="module" id="module-10">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 5 DE 6</div>
+                    <h2>Qualidade Visual da Água</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Como você vê a água? (pode escolher mais de uma)</p>
+                </div>
+
+                <div class="choices-grid" id="qualidadeChoices"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 11: FOTOS -->
+            <div class="module" id="module-11">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 3 DE 6</div>
+                    <h2>Evidências Visuais</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Tire pelo menos 3 fotos da nascente</p>
+                </div>
+
+                <button class="btn btn-success" onclick="adicionarFoto()" style="width: 100%;">
+                    [+] Adicionar Foto
+                </button>
+
+                <div id="fotoInfo" style="margin-top: 16px; font-size: 15px; color: var(--text-light);">
+                    Fotos: 0
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
+                </div>
+            </div>
+
+            <!-- MÓDULO 12: CUIDADOR -->
+            <div class="module" id="module-12">
+                <div class="module-title">
+                    <div class="module-subtitle">MÓDULO 6 DE 6</div>
+                    <h2>Há um Cuidador?</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Alguém cuida ou poderia cuidar desta nascente?</p>
+                </div>
+
+                <div class="choices-grid" id="cuidadorChoices"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
+                    <button class="btn btn-primary" onclick="proximoModulo()">Revisar →</button>
+                </div>
+            </div>
+
+            <!-- RESUMO FINAL -->
+            <div class="module" id="module-resumo">
+                <div class="module-title">
+                    <h2>Confira Seus Dados</h2>
+                    <p style="font-size: 16px; color: var(--text-light); margin-top: 12px;">Verifique se TUDO está CORRETO antes de ENVIAR</p>
+                </div>
+
+                <div class="summary-box" id="summaryContent"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="voltarModulo()">Voltar e Corrigir</button>
+                    <button class="btn btn-success" onclick="enviarFormulario()">ENVIAR TUDO ✓</button>
+                </div>
+            </div>
+
+            <!-- SUCESSO -->
+            <div class="module" id="module-sucesso">
+                <div class="success-screen">
+                    <div class="success-icon">✓</div>
+                    <div class="success-title">Enviado com Sucesso!</div>
+                    <div class="success-text">
+                        Obrigado por ajudar a proteger as nascentes da nossa região!
+                    </div>
+                    <div class="success-text">
+                        Seus dados foram SALVOS com SUCESSO!
+                    </div>
+                    <div class="success-warning">
+                        ⚠️ NÃO PODE MAIS VOLTAR ATRÁS
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- MODAL -->
+        <div class="modal" id="feedbackModal">
+            <div class="modal-content">
+                <p id="feedbackMessage"></p>
+                <button class="btn btn-primary" onclick="fecharModal()" style="width: 100%;">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('✓ Service Worker'))
+                .catch(err => console.log('✗ Erro:', err));
+        }
+    </script>
+</body>
+</html>
+```
