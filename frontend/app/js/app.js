@@ -5,8 +5,8 @@ const modulosTotal = 12;
 // ============================================
 // SUPABASE CONFIG
 // ============================================
-const SUPABASE_URL = 'https://seu-projeto.supabase.co'; // SUBSTITUA
-const SUPABASE_KEY = 'eyJ0eXAi...'; // SUBSTITUA COM SUA CHAVE
+const SUPABASE_URL = 'https://zuvmmtcjllnvpzrrrpkj.supabase.co'; // SUBSTITUA
+const SUPABASE_KEY = 'sb_secret_jkyABX7aItZaHcI9A68VeA_rpprrK3a'; // SUBSTITUA COM SUA CHAVE
 
 // Inicializar Supabase
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
