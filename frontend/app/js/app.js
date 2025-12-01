@@ -2,6 +2,15 @@
 let modulo = 0;
 const modulosTotal = 12;
 
+// ============================================
+// SUPABASE CONFIG
+// ============================================
+const SUPABASE_URL = 'https://seu-projeto.supabase.co'; // SUBSTITUA
+const SUPABASE_KEY = 'eyJ0eXAi...'; // SUBSTITUA COM SUA CHAVE
+
+// Inicializar Supabase
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let dados = {
     nome: '',
     telefone: '',
@@ -213,17 +222,41 @@ function mostrarResumo() {
     summary.innerHTML = html;
 }
 
-// ENVIAR
-function enviarFormulario() {
+// ENVIAR PARA SUPABASE
+async function enviarFormulario() {
     dados.nome = document.getElementById('nome').value;
     dados.telefone = document.getElementById('telefone').value;
     dados.data = document.getElementById('data').value;
     dados.referencia = document.getElementById('referencia').value;
     
-    localStorage.setItem('nascentes_data', JSON.stringify(dados));
-    localStorage.setItem('lastSync', new Date().toLocaleString('pt-BR'));
-    modulo = modulosTotal + 2;
-    atualizarModulo();
+    // Validação
+    if (!dados.nome || !dados.telefone) {
+        mostrarFeedback('⚠️ Preencha NOME e TELEFONE!');
+        return;
+    }
+    
+    try {
+        // Enviar para Supabase
+        const { data, error } = await supabase
+            .from('nascentes')
+            .insert([dados]);
+        
+        if (error) {
+            console.error('Erro Supabase:', error);
+            mostrarFeedback('❌ Erro ao enviar: ' + error.message);
+            return;
+        }
+        
+        // Sucesso!
+        localStorage.setItem('nascentes_data', JSON.stringify(dados));
+        localStorage.setItem('lastSync', new Date().toLocaleString('pt-BR'));
+        modulo = modulosTotal + 2;
+        atualizarModulo();
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        mostrarFeedback('❌ Erro inesperado: ' + error.message);
+    }
 }
 
 // GPS
