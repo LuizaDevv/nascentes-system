@@ -1,3 +1,21 @@
+# Node
 node_modules/
-.env
-*.log
+npm-debug.log
+
+# Backend
+backend/.env
+backend/venv/
+backend/__pycache__/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporários
+*.tmp
+temp/
