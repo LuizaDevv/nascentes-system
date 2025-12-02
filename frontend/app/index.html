@@ -127,6 +127,11 @@
 
                 <div class="choices-grid" id="baciaChoices"></div>
 
+                <div class="form-group" id="baciaOutroGroup" style="display: none; margin-top: 12px;">
+                    <label class="form-label">Especifique a bacia</label>
+                    <input type="text" class="input-large" id="baciaOutro" placeholder="Digite aqui...">
+                </div>
+
                 <div class="button-group">
                     <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
                     <button class="btn btn-primary" onclick="proximoModulo()">Próximo →</button>
@@ -142,6 +147,11 @@
                 </div>
 
                 <div class="choices-grid" id="regionalChoices"></div>
+
+                <div class="form-group" id="regionalOutroGroup" style="display: none; margin-top: 12px;">
+                    <label class="form-label">Especifique a regional</label>
+                    <input type="text" class="input-large" id="regionalOutro" placeholder="Digite aqui...">
+                </div>
 
                 <div class="button-group">
                     <button class="btn btn-secondary" onclick="voltarModulo()">Voltar</button>
@@ -159,11 +169,19 @@
                 <div style="margin-bottom: 28px;">
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Forma - A água brota de um ponto único ou espalhada?</p>
                     <div class="choices-grid" id="formaChoices"></div>
+                    <div class="form-group" id="formaOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique a forma</label>
+                        <input type="text" class="input-large" id="formaOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div>
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Aspecto Visual - Qual a condição da água?</p>
                     <div class="choices-grid" id="aspectoVisualChoices"></div>
+                    <div class="form-group" id="aspectoVisualOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique o aspecto visual</label>
+                        <input type="text" class="input-large" id="aspectoVisualOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div class="button-group">
@@ -182,11 +200,19 @@
                 <div style="margin-bottom: 28px;">
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Condição Observada - Em que estado a nascente se encontra?</p>
                     <div class="choices-grid" id="condicaoObservadaChoices"></div>
+                    <div class="form-group" id="condicaoObservadaOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique a condição</label>
+                        <input type="text" class="input-large" id="condicaoObservadaOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div>
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Vazão - Qual a quantidade de água que sai da nascente?</p>
                     <div class="choices-grid" id="vazaoChoices"></div>
+                    <div class="form-group" id="vazaoOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique a vazão</label>
+                        <input type="text" class="input-large" id="vazaoOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div class="button-group">
@@ -205,11 +231,19 @@
                 <div style="margin-bottom: 28px;">
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Uso - Para que a água desta nascente é usada? (pode escolher várias)</p>
                     <div class="choices-grid" id="usoChoices"></div>
+                    <div class="form-group" id="usoOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique o(s) outro(s) uso(s)</label>
+                        <input type="text" class="input-large" id="usoOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div>
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Análise do Relevo</p>
                     <div class="choices-grid" id="analiseReleveChoices"></div>
+                    <div class="form-group" id="analiseReleveOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique a análise do relevo</label>
+                        <input type="text" class="input-large" id="analiseReleveOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div class="button-group">
@@ -228,16 +262,28 @@
                 <div style="margin-bottom: 28px;">
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Migração de Ferro/Óxidos - Há sinais de ferrugem na água ou nas pedras?</p>
                     <div class="choices-grid" id="migracaoFerroChoices"></div>
+                    <div class="form-group" id="migracaoFerroOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique</label>
+                        <input type="text" class="input-large" id="migracaoFerroOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div style="margin-bottom: 28px;">
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Cobertura do Solo</p>
                     <div class="choices-grid" id="coberturaSoloChoices"></div>
+                    <div class="form-group" id="coberturaSoloOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique a cobertura do solo</label>
+                        <input type="text" class="input-large" id="coberturaSoloOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div>
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Formação de Canal</p>
                     <div class="choices-grid" id="formacaoCanalChoices"></div>
+                    <div class="form-group" id="formacaoCanalOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique</label>
+                        <input type="text" class="input-large" id="formacaoCanalOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div class="button-group">
@@ -256,11 +302,19 @@
                 <div style="margin-bottom: 28px;">
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Deposição de Esgoto - Há esgotamento sanitário na nascente/curso d'água?</p>
                     <div class="choices-grid" id="esgoroDepositoChoices"></div>
+                    <div class="form-group" id="esgoroDepositoOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique</label>
+                        <input type="text" class="input-large" id="esgoroDepositoOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div style="margin-bottom: 28px;">
                     <p style="font-size: 16px; color: var(--text-light); margin-bottom: 12px;">Acesso</p>
                     <div class="choices-grid" id="acessoChoices"></div>
+                    <div class="form-group" id="acessoOutroGroup" style="display: none; margin-top: 12px;">
+                        <label class="form-label">Especifique o acesso</label>
+                        <input type="text" class="input-large" id="acessoOutro" placeholder="Digite aqui...">
+                    </div>
                 </div>
 
                 <div>
