@@ -493,4 +493,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderOpcoes('areaVerdeChoices', 'areaVerde');
 
     atualizarModulo();
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 52b7d11ce620c80942e1be0c796d9ce22baa89ae
