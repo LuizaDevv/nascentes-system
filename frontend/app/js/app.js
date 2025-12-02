@@ -25,8 +25,8 @@ let dados = {
     bacia: '',
     regional: '',
     forma: '',
-    aspecto_visual: [],
-    condicao_observada: [],
+    aspectoVisual: [],
+    condicaoObservada: [],
     vazao: '',
     uso: [],
     analise_relevo: '',
@@ -36,16 +36,17 @@ let dados = {
     esgoto_deposito: '',
     acesso: '',
     area_verde: '',
-    fotos_qtd: 0
+    fotos_qtd: 0,
+    informacoes_adicionais: ''
 };
 
 // ============================================
 // OPÇÕES DOS FORMULÁRIOS (SEM "NÃO SEI")
 // ============================================
 const opcoes = {
-temCuidador: [
-    { icon: '✓', text: 'Sim' },
-    { icon: '✗', text: 'Não' }
+    temCuidador: [
+        { icon: '✓', text: 'Sim' },
+        { icon: '✗', text: 'Não' }
     ],
     bacia: [
         { icon: '🌊', text: 'Arrudas' },
@@ -205,14 +206,20 @@ function validarModuloAtual() {
             break;
         case 5:
             if (!dados.forma) erro = '⚠️ Escolha a Forma';
-            if (dados.aspecto_visual.length === 0) erro = '⚠️ Escolha pelo menos um Aspecto Visual';
+            if (!Array.isArray(dados.aspectoVisual) || dados.aspectoVisual.length === 0) {
+                erro = '⚠️ Escolha pelo menos um Aspecto Visual';
+            }
             break;
         case 6:
-            if (dados.condicao_observada.length === 0) erro = '⚠️ Escolha a Condição Observada';
+            if (!Array.isArray(dados.condicaoObservada) || dados.condicaoObservada.length === 0) {
+                erro = '⚠️ Escolha a Condição Observada';
+            }
             if (!dados.vazao) erro = '⚠️ Escolha a Vazão';
             break;
         case 7:
-            if (dados.uso.length === 0) erro = '⚠️ Escolha pelo menos um Uso';
+            if (!Array.isArray(dados.uso) || dados.uso.length === 0) {
+                erro = '⚠️ Escolha pelo menos um Uso';
+            }
             if (!dados.analise_relevo) erro = '⚠️ Escolha a Análise do Relevo';
             break;
         case 8:
@@ -223,7 +230,10 @@ function validarModuloAtual() {
         case 9:
             if (!dados.esgoto_deposito) erro = '⚠️ Indique sobre Deposição de Esgoto';
             if (!dados.acesso) erro = '⚠️ Escolha o Acesso';
-            if (!dados.area_verde && dados.area_verde !== false) erro = '⚠️ Indique se está em área verde';
+            if (!dados.area_verde) erro = '⚠️ Indique se está em área verde';
+            break;
+        case 10:
+            // Módulo 10 não tem validação obrigatória (fotos e informações são opcionais)
             break;
     }
 
@@ -293,13 +303,12 @@ function atualizarModulo() {
 // ============================================
 document.addEventListener('change', function (e) {
     if (e.target.name === 'temCuidador') {
-        dados.tem_cuidador = e.target.value; // garante que o dado é salvo
+        dados.tem_cuidador = e.target.value;
         const isSim = e.target.value === 'Sim';
         document.getElementById('cuidadorInfoGroup').style.display = isSim ? 'block' : 'none';
         document.getElementById('cuidadorTelefoneGroup').style.display = isSim ? 'block' : 'none';
     }
 });
-
 
 // ============================================
 // RESUMO
@@ -309,7 +318,7 @@ function mostrarResumo() {
     let html = '';
 
     for (const [key, value] of Object.entries(dados)) {
-        if (value && value !== '0' && value !== '' && value.length > 0) {
+        if (value && value !== '0' && value !== '' && (!Array.isArray(value) || value.length > 0)) {
             const displayValue = Array.isArray(value) ? value.join(', ') : value;
             const label = key
                 .replace(/_/g, ' ')
@@ -337,6 +346,7 @@ async function enviarFormulario() {
     dados.data_registro = document.getElementById('data_registro').value;
     dados.cuidador_nome = document.getElementById('cuidador_nome').value;
     dados.cuidador_telefone = document.getElementById('cuidador_telefone').value;
+    dados.informacoes_adicionais = document.getElementById('informacoes_adicionais')?.value || '';
 
     if (!dados.responsavel_nome || !dados.responsavel_telefone) {
         mostrarFeedback('⚠️ Dados incompletos. Por favor, volte e verifique.');
