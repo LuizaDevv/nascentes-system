@@ -136,33 +136,36 @@ cuidador: [
 // RENDERIZAR OPÇÕES
 // ============================================
 function renderOpcoes(containerId, tipo, tipo_input = 'radio') {
-const container = document.getElementById(containerId);
-if (!container) return;
-container.innerHTML = opcoes[tipo].map((opt, idx) => `
-<label class="choice-btn">
-<input type="${tipo_input}" name="${tipo}" value="${opt.text}">
-<span class="choice-icon">${opt.icon}</span>
-<div class="choice-text">
-<div>${opt.text}</div>
-${opt.subtext ? `<div class="choice-subtext">${opt.subtext}</div>` : ''}
-</div>
-</label>
-`).join('');
-container.querySelectorAll('input').forEach(input => {
-input.addEventListener('change', function() {
-container.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remov
-if (this.type === 'radio') {
-this.parentElement.classList.add('selected');
-dados[tipo] = this.value;
-} else {
-document.querySelectorAll(`input[name="${tipo}"]:checked`).forEach(cb
-cb.parentElement.classList.add('selected');
-});
-dados[tipo] = Array.from(document.querySelectorAll(`input[name="${tip
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    container.innerHTML = opcoes[tipo].map((opt, idx) => `
+        <label class="choice-btn">
+            <input type="${tipo_input}" name="${tipo}" value="${opt.text}">
+            <span class="choice-icon">${opt.icon}</span>
+            <div class="choice-text">
+                <div>${opt.text}</div>
+                ${opt.subtext ? `<div class="choice-subtext">${opt.subtext}</div>` : ''}
+            </div>
+        </label>
+    `).join('');
+
+    container.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', function() {
+            container.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remove('selected'));
+            if (this.type === 'radio') {
+                this.parentElement.classList.add('selected');
+                dados[tipo] = this.value;
+            } else {
+                document.querySelectorAll(`input[name="${tipo}"]:checked`).forEach(cb => {
+                    cb.parentElement.classList.add('selected');
+                });
+                dados[tipo] = Array.from(document.querySelectorAll(`input[name="${tipo}"]:checked`)).map(cb => cb.value);
+            }
+        });
+    });
 }
-});
-});
-}
+
 // ============================================
 // NAVEGAÇÃO
 // ============================================
