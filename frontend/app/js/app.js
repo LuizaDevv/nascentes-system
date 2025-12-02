@@ -43,10 +43,9 @@ let dados = {
 // OPÇÕES DOS FORMULÁRIOS (SEM "NÃO SEI")
 // ============================================
 const opcoes = {
-    temCuidador: [
-        { icon: '✓', text: 'Sim' },
-        { icon: '✗', text: 'Não' },
-        { icon: '❓', text: 'Potencial' }
+temCuidador: [
+    { icon: '✓', text: 'Sim' },
+    { icon: '✗', text: 'Não' }
     ],
     bacia: [
         { icon: '🌊', text: 'Arrudas' },
@@ -294,11 +293,13 @@ function atualizarModulo() {
 // ============================================
 document.addEventListener('change', function (e) {
     if (e.target.name === 'temCuidador') {
-        const isSim = e.target.value === 'Sim' || e.target.value === 'Potencial';
+        dados.tem_cuidador = e.target.value; // garante que o dado é salvo
+        const isSim = e.target.value === 'Sim';
         document.getElementById('cuidadorInfoGroup').style.display = isSim ? 'block' : 'none';
         document.getElementById('cuidadorTelefoneGroup').style.display = isSim ? 'block' : 'none';
     }
 });
+
 
 // ============================================
 // RESUMO
