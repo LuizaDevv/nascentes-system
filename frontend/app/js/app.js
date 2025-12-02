@@ -6,7 +6,7 @@ const modulosTotal = 12;
 // SUPABASE CONFIG
 // ============================================
 const SUPABASE_URL = 'https://zuvmmtcjllnvpzrrrpkj.supabase.co';
-const SUPABASE_KEY = 'sb_secret_jkyABX7aItZaHcI9A68VeA_rpprrK3a';
+const SUPABASE_KEY = 'sb_publishable_Wy1F5cpBP_CuNAMKArBqCA_H7eGmOOt';
 // Inicializar Supabase
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 // ============================================
