@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/service-worker.js",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/index.html"
+    }
+  ]
+}
