@@ -41,7 +41,7 @@ let dados = {
 };
 
 // ============================================
-// OPÇÕES DOS FORMULÁRIOS (SEM "NÃO SEI")
+// OPÇÕES DOS FORMULÁRIOS
 // ============================================
 const opcoes = {
     temCuidador: [
@@ -176,8 +176,34 @@ function renderOpcoes(containerId, tipo, tipo_input = 'radio') {
                     document.querySelectorAll(`input[name="${tipo}"]:checked`)
                 ).map(cb => cb.value);
             }
+            // Monitora campos Outro
+            monitorarOutro(tipo, tipo_input);
         });
     });
+}
+
+// ============================================
+// MONITORAR CAMPOS OUTRO DINÂMICOS
+// ============================================
+function monitorarOutro(nomeCampo, tipoInput) {
+    const selecionados = Array.isArray(dados[nomeCampo]) 
+        ? dados[nomeCampo] 
+        : (dados[nomeCampo] ? [dados[nomeCampo]] : []);
+    
+    const temOutro = selecionados.some(val => val === 'Outro' || val === 'Outra');
+    const groupId = `${nomeCampo}OutroGroup`;
+    const inputId = `${nomeCampo}Outro`;
+    
+    const group = document.getElementById(groupId);
+    if (group) {
+        group.style.display = temOutro ? 'block' : 'none';
+    }
+    
+    // Limpar se desmarcar Outro
+    if (!temOutro) {
+        const input = document.getElementById(inputId);
+        if (input) input.value = '';
+    }
 }
 
 // ============================================
@@ -233,7 +259,7 @@ function validarModuloAtual() {
             if (!dados.area_verde) erro = '⚠️ Indique se está em área verde';
             break;
         case 10:
-            // Módulo 10 não tem validação obrigatória (fotos e informações são opcionais)
+            // Módulo 10 não tem validação obrigatória
             break;
     }
 
@@ -336,6 +362,36 @@ function mostrarResumo() {
 }
 
 // ============================================
+// PROCESSAR CAMPOS OUTRO ANTES DE ENVIAR
+// ============================================
+function processarOutros() {
+    // Lista de campos que têm opção Outro
+    const camposComOutro = [
+        'bacia', 'regional', 'forma', 'aspectoVisual', 
+        'condicaoObservada', 'vazao', 'uso', 'analiseRelevo',
+        'migracaoFerro', 'coberturaSolo', 'formacao_canal',
+        'esgoto_deposito', 'acesso'
+    ];
+
+    camposComOutro.forEach(campo => {
+        const inputOutro = document.getElementById(`${campo}Outro`);
+        if (inputOutro && inputOutro.value.trim()) {
+            const valor = inputOutro.value.trim();
+            
+            if (Array.isArray(dados[campo])) {
+                // Para checkboxes (arrays)
+                if (!dados[campo].includes(valor)) {
+                    dados[campo].push(valor);
+                }
+            } else if (dados[campo] === 'Outro' || dados[campo] === 'Outra') {
+                // Para radio buttons (strings)
+                dados[campo] = valor;
+            }
+        }
+    });
+}
+
+// ============================================
 // ENVIAR PARA SUPABASE
 // ============================================
 async function enviarFormulario() {
@@ -346,7 +402,10 @@ async function enviarFormulario() {
     dados.data_registro = document.getElementById('data_registro').value;
     dados.cuidador_nome = document.getElementById('cuidador_nome').value;
     dados.cuidador_telefone = document.getElementById('cuidador_telefone').value;
-    dados.informacoes_adicionais = document.getElementById('informacoes_adicionais')?.value || '';
+    dados.informacoes_adicionais = document.getElementById('informacoes_adicionais').value;
+
+    // Processar campos Outro antes de enviar
+    processarOutros();
 
     if (!dados.responsavel_nome || !dados.responsavel_telefone) {
         mostrarFeedback('⚠️ Dados incompletos. Por favor, volte e verifique.');
